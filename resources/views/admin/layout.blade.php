@@ -13,6 +13,7 @@
         <div class="main-panel">
           <div class="content-wrapper">
 
+            @yield('body')
           {{-- @include('admin.body')  --}}
 
           </div>

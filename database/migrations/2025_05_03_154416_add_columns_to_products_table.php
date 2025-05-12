@@ -18,7 +18,10 @@ return new class extends Migration
             $table->decimal("price", 8, 2);
             $table->string("image", 255)->nullable();
             $table->integer("quantity");
-
+            $table->foreignId("category_id")
+                ->constrained("categories") // اسم جدول الـ categories هنا
+                ->onUpdate("cascade")
+                ->onDelete("cascade");
         });
     }
 

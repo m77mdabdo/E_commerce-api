@@ -5,7 +5,11 @@
     </div>
     <ul class="nav">
       <li class="nav-item profile">
-        <div class="profile-desc">
+        <li class="nav-item dropdown d-none d-lg-block">
+            <a class="nav-link btn w-50 btn-success create-new-button" href="{{ route('allProducts') }}">Profile</a>
+
+
+        {{-- <div class="profile-desc">
           <div class="profile-pic">
             <div class="count-indicator">
               <img class="img-xs rounded-circle " src="{{asset("admin/assets")}}/images/faces/face15.jpg" alt="">
@@ -53,9 +57,11 @@
           </div>
         </div>
       </li>
-      <li class="nav-item nav-category">
+      {{-- <li class="nav-item nav-category"> --}}
         <span class="nav-link">Navigation</span>
-      </li>
+      {{-- </li>  --}}
+
+
       <li class="nav-item menu-items">
         <a class="nav-link" href="index.html">
           <span class="menu-icon">
@@ -69,14 +75,35 @@
           <span class="menu-icon">
             <i class="mdi mdi-laptop"></i>
           </span>
-          <span class="menu-title">Basic UI Elements</span>
+          <span class="menu-title"> Category</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+            <a class="nav-link btn w-10 btn-success create-new-button" href="{{ route('allCategory') }}">All Category</a>
+            <a class="nav-link btn w-10 btn-success create-new-button" href="{{ route('createCategory') }}">+ New Category</a>
+
+
+
+
+            {{-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> --}}
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+          <span class="menu-icon">
+            <i class="mdi mdi-laptop"></i>
+          </span>
+          <span class="menu-title"> Product</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+          <ul class="nav flex-column sub-menu">
+            <a class="nav-link btn w-10 btn-success create-new-button" href="{{ route('allProducts') }}">All Product</a>
+            <a class="nav-link btn w-10 btn-success create-new-button" href="{{ route('createProduct') }}">+ New Product</a>
+
+            {{-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> --}}
           </ul>
         </div>
       </li>
@@ -88,7 +115,7 @@
           <span class="menu-title">Form Elements</span>
         </a>
       </li>
-      <li class="nav-item menu-items">
+      {{-- <li class="nav-item menu-items">
         <a class="nav-link" href="pages/tables/basic-table.html">
           <span class="menu-icon">
             <i class="mdi mdi-table-large"></i>
@@ -137,6 +164,6 @@
           </span>
           <span class="menu-title">Documentation</span>
         </a>
-      </li>
+      </li> --}}
     </ul>
   </nav>
