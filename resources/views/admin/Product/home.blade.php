@@ -31,7 +31,7 @@
         <td class="text-right"> {{ $product->desc }} </td>
         <td class="text-right font-weight-medium">
 
-            <img src="{{ asset("storage/products/$product->image") }}" alt="">
+            <img src="{{ asset('storage/'.$product->image) }}" alt="">
 
         </td>
         <td class="text-right font-weight-medium"> {{ $product->price }} </td>
@@ -48,5 +48,7 @@
     </tbody>
   </table>
   {{ $products->links() }}
+
+  <a class="nav-link btn w-10 btn-success create-new-button" href="{{ route('createProduct') }}">+ New Product</a>
 
 @endsection

@@ -11,7 +11,7 @@ class CategoryController extends Controller
     //
     public function all()
     {
-        $categories = Category::paginate(9);
+        $categories = Category::paginate(3);
         return view('admin.category.homeCategory', ["categories" => $categories]);
     }
 
@@ -70,13 +70,13 @@ class CategoryController extends Controller
         ]);
 
         $category = Category::findOrFail($id);
-        $path = $category->image; // افتراضياً خلي الصورة القديمة
+        $path = $category->image;
 
         if ($request->hasFile("image")) {
-            // حذف الصورة القديمة
+
             Storage::disk('public')->delete($category->image);
 
-            // رفع الجديدة
+
             $imageName = time() . '_' . $request->image->getClientOriginalName();
             $path = $request->image->storeAs('categories', $imageName, 'public');
         }

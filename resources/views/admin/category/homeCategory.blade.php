@@ -30,7 +30,7 @@
         <td class="text-right"> {{ $category->desc }} </td>
         <td class="text-right font-weight-medium">
 
-            <img src="{{ asset("storage/categories/$category->image") }}" alt="">
+            <img src="{{ asset('storage/' .$category->image) }}" alt="">
 
         </td>
         {{-- <td class="text-right font-weight-medium"> {{ $category->status }} </td> --}}
@@ -49,5 +49,7 @@
     </tbody>
   </table>
   {{ $categories->links() }}
+
+  <a class="nav-link btn w-10 btn-success create-new-button" href="{{ route('createCategory') }}">+ New Category</a>
 
 @endsection

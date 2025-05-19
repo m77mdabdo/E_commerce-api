@@ -52,6 +52,11 @@ Route::controller(ProductController::class)->middleware(['auth', 'IsAdmin'])->gr
 
     Route::get('products/create', 'create')->name('createProduct');
     Route::post('products', 'store')->name('storeProduct');
+
+    Route::get('products/edit/{id}', 'edit')->name('editProduct');
+    Route::put('products/edit/{id}', 'update')->name('updateProduct');
+
+    Route::delete('products/delete/{id}', 'delete')->name('deleteProduct');
 });
 
 // Route::get("user", [ProductController::class, "user"]);

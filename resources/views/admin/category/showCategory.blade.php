@@ -13,7 +13,7 @@
 <p><strong>Description:</strong> {{$category->desc }}</p>
 
 <p><strong>Image:</strong><br>
-    <img src="{{ asset("storage/categories/$category->image") }}" alt="">
+    <img src="{{ asset('storage/' .$category->image) }}" alt="">
 
 </p>
 
@@ -39,6 +39,7 @@ Products : <br>
 
     </form>
 
-
+    <br>
+    <a href="{{ route('allCategory') }}" class="btn btn-primary">Back to List </a>
 
 @endsection

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("image", 255)->nullable();
             $table->integer("quantity");
             $table->foreignId("category_id")
-                ->constrained("categories") // اسم جدول الـ categories هنا
+                ->constrained("categories")
                 ->onUpdate("cascade")
                 ->onDelete("cascade");
         });
