@@ -1,27 +1,41 @@
 <?php
 
-use App\Http\Controllers\ApiCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ApiProductController;
+use App\Http\Controllers\API\ApiCategoryController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
-// Route::controller(ApiCategoryController::class)->middleware(['auth', 'IsAdmin'])
-//     ->group(function () {
-//         Route::get('categories', 'all')->name('allCategory');
-//         Route::get('categories/show/{id}', 'show')->name('showCategory');
+Route::controller(ApiCategoryController::class)
+    ->group(function () {
+        Route::get('categories', 'all')->name('allCategory');
+        Route::get('categories/show/{id}', 'show')->name('showCategory');
 
-//         // //create
-//         Route::get('categories/create', 'create')->name('createCategory');
-//         Route::post('categories', 'store')->name('storeCategory');
+        // //create
 
-//         //update
-//         Route::get('categories/edite/{id}', 'edite')->name('editeCategory');
-//         Route::put('categories/update/{id}', 'update')->name('updateCategory');
+        Route::post('categories', 'store')->name('storeCategory');
 
-//         //delete
+        //update
 
-//         Route::delete("categories/delete/{id}", "delete")->name("deleteCategory");
-//     });
+        Route::put('categories/update/{id}', 'update')->name('updateCategory');
+
+        //delete
+
+        Route::delete("categories/delete/{id}", "delete")->name("deleteCategory");
+    });
+
+//products
+Route::controller(ApiProductController::class)->group(function () {
+    Route::get('products', 'all')->name('allProducts');
+    Route::get('products/show/{id}', 'show')->name('showProduct');
+
+    Route::post('products', 'store')->name('storeProduct');
+
+
+    Route::put('products/update/{id}', 'update')->name('updateProduct');
+
+    Route::delete('products/delete/{id}', 'delete')->name('deleteProduct');
+});

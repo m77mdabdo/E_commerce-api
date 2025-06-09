@@ -19,6 +19,12 @@ class IsAdmin
         if (Auth::user()->role == "admin") {
             return $next($request);
         } else {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Unauthorized. Admins only.'
+                ], 403); // Forbidden
+            }
+
             return redirect(url("redirect"));
         }
     }

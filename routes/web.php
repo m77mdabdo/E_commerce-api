@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
 use PHPUnit\Framework\Attributes\Group;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
