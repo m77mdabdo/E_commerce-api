@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             "IsAdmin" => App\Http\Middleware\IsAdmin::class,
+            "ApiAuth" => App\Http\Middleware\ApiAuth::class,
 
         ]);
         //

@@ -122,5 +122,7 @@ class ProductController extends Controller
         session()->flash("success", "data delete  successfuly");
 
         return  redirect(route("allProducts"));
+        
+        
     }
 }
