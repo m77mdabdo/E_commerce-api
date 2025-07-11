@@ -91,7 +91,7 @@ class ProductController extends Controller
 
 
             $imageName = time() . '_' . $request->image->getClientOriginalName();
-            $path = $request->image->storeAs('products', $imageName, 'public');
+            $path = $request->image->storeAs('products',$imageName, 'public');
         }
 
 
@@ -122,7 +122,7 @@ class ProductController extends Controller
         session()->flash("success", "data delete  successfuly");
 
         return  redirect(route("allProducts"));
-        
-        
+
+
     }
 }

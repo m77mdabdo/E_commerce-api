@@ -17,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
             "ApiAuth" => App\Http\Middleware\ApiAuth::class,
 
         ]);
+        $middleware->web(append:[
+            App\Http\Middleware\ChangeLang::class
+
+        ]
+
+    );
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {

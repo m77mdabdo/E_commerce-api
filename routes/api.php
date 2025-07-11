@@ -11,43 +11,43 @@ use App\Http\Controllers\API\ApiAuthController ;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::controller(ApiCategoryController::class)
-    ->group(function () {
-        Route::get('categories', 'all')->name('allCategory')->middleware('ApiAuth');
-        Route::get('categories/show/{id}', 'show')->name('showCategory')->middleware('ApiAuth');
+// Route::controller(ApiCategoryController::class)
+//     ->group(function () {
+//         Route::get('categories', 'all')->name('allCategory')->middleware('ApiAuth');
+//         Route::get('categories/show/{id}', 'show')->name('showCategory')->middleware('ApiAuth');
 
-        // //create
+//         // //create
 
-        Route::post('categories', 'store')->name('storeCategory')->middleware('ApiAuth');
+//         Route::post('categories', 'store')->name('storeCategory')->middleware('ApiAuth');
 
-        //update
+//         //update
 
-        Route::put('categories/update/{id}', 'update')->name('updateCategory')->middleware('ApiAuth');;
+//         Route::put('categories/update/{id}', 'update')->name('updateCategory')->middleware('ApiAuth');;
 
-        //delete
+//         //delete
 
-        Route::delete("categories/delete/{id}", "delete")->name("deleteCategory")->middleware('ApiAuth');;
-    });
-
-//products
-Route::controller(ApiProductController::class)->group(function () {
-    Route::get('products', 'all')->name('allProducts');
-    Route::get('products/show/{id}', 'show')->name('showProduct');
-
-    Route::post('products', 'store')->name('storeProduct')->middleware('ApiAuth');;
+//         Route::delete("categories/delete/{id}", "delete")->name("deleteCategory")->middleware('ApiAuth');;
+//     });
 
 
-    Route::put('products/update/{id}', 'update')->name('updateProduct')->middleware('ApiAuth');;
+// Route::controller(ApiProductController::class)->group(function () {
+//     Route::get('products', 'all')->name('allProducts');
+//     Route::get('products/show/{id}', 'show')->name('showProduct');
 
-    Route::delete('products/delete/{id}', 'delete')->name('deleteProduct')->middleware('ApiAuth');;
-});
+//     Route::post('products', 'store')->name('storeProduct')->middleware('ApiAuth');;
 
-//auth
 
-Route::controller(ApiAuthController::class)->group(function (){
-    Route::post('register','register')->name('register');
-    Route::post('login','login')->name('login');
-    Route::post('logout','logout')->name('logout');
-});
+//     Route::put('products/update/{id}', 'update')->name('updateProduct')->middleware('ApiAuth');;
+
+//     Route::delete('products/delete/{id}', 'delete')->name('deleteProduct')->middleware('ApiAuth');;
+// });
+
+// //auth
+
+// Route::controller(ApiAuthController::class)->group(function (){
+//     Route::post('register','register')->name('register');
+//     Route::post('login','login')->name('login');
+//     Route::post('logout','logout')->name('logout');
+// });
 
 

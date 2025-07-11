@@ -29,7 +29,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+     $data =   $request->validate([
             "name" => 'required|string|max:255',
             "desc" => "required|string",
             "image" => "required|image |mimes:png,jpg,gif,jpeg",
@@ -37,13 +37,15 @@ class CategoryController extends Controller
 
 
         ]);
-        $imageName = time() . '_' . $request->image->getClientOriginalName();
-        $path = $request->image->storeAs('categories', $imageName, 'public');
+    //    $imageName = time() . '_' . preg_replace('/\s+/', '_', $request->image->getClientOriginalName());
+
+    //     $path = $request->image->storeAs('categories', $imageName, 'public');
+    $data['image']=Storage::putFile('categories',$request->image);
 
         Category::create([
             "name" => $request->name,
             "desc" => $request->desc,
-            "image" => $path,
+            "image" => $data['image'],
             'status' => $request->status,
 
 

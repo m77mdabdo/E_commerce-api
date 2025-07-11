@@ -30,7 +30,8 @@
         <td class="text-right"> {{ $category->desc }} </td>
         <td class="text-right font-weight-medium">
 
-            <img src="{{ asset('storage/' .$category->image) }}" alt="">
+            <img src="{{ asset('storage/' . $category->image) }}" alt="image" width="70">
+
 
         </td>
         {{-- <td class="text-right font-weight-medium"> {{ $category->status }} </td> --}}

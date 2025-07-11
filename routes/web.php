@@ -60,3 +60,19 @@ Route::controller(ProductController::class)->middleware(['auth', 'IsAdmin'])->gr
 });
 
 // Route::get("user", [ProductController::class, "user"]);
+
+//language
+
+Route::get("change/{lang}",function($lang){
+
+
+    if($lang == "en"){
+        session()->put("lang", "en");
+    }else if($lang == "ar"){
+        session()->put("lang", "ar");
+    }else{
+        session()->put("lang", "en");
+    }
+
+    return redirect()->back();
+});
