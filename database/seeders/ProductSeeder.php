@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
             "price" => 10000,
             "image" => "3.jpeg",
             "quantity" => 6,
-            "category_id" => 1
+            "category_id" => 12
 
         ]);
         Product::create([
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
             "price" => 100000,
             "image" => "5.jpeg",
             "quantity" => 5,
-            "category_id" => 1
+            "category_id" => 12
 
         ]);
         Product::create([
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
             "price" => 14000,
             "image" => "6.jpeg",
             "quantity" => 10,
-            "category_id" => 3
+            "category_id" => 12
 
         ]);
         Product::create([
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
             "price" => 10000,
             "image" => "8.jpeg",
             "quantity" => 6,
-            "category_id" => 2
+            "category_id" => 12
 
         ]);
     }

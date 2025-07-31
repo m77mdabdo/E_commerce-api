@@ -38,8 +38,8 @@
             </a>
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('allCategory') }}"> @lang('massage.categories')</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('allProducts') }}">@lang('massage.products')</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('allCategory') }}"> @lang('massages.categories')</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('allProducts') }}">@lang('massages.products')</a></li>
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('/dashboard') }}"> Logout</a></li> --}}
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> </a></li>
                 </ul>
@@ -52,16 +52,16 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-translate"></i>
                 </span>
-                <span class="menu-title">{{__('massage.language')}}</span>
+                <span class="menu-title">{{__('massages.language')}}</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="language">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('change/en')}}">@lang('massage.english')  </a>
+                        <a class="nav-link" href="{{ url('change/en')}}">@lang('massages.english')  </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('change/ar')}}"> @lang('massage.arabic') </a>
+                        <a class="nav-link" href="{{ url('change/ar')}}"> @lang('massages.arabic') </a>
                     </li>
                 </ul>
             </div>

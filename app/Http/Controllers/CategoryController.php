@@ -18,6 +18,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::find($id);
+        // dd($category);
         return view('admin.category.showCategory', compact('category'));
     }
 
@@ -29,7 +30,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-     $data =   $request->validate([
+        $data =   $request->validate([
             "name" => 'required|string|max:255',
             "desc" => "required|string",
             "image" => "required|image |mimes:png,jpg,gif,jpeg",
@@ -37,10 +38,11 @@ class CategoryController extends Controller
 
 
         ]);
-    //    $imageName = time() . '_' . preg_replace('/\s+/', '_', $request->image->getClientOriginalName());
 
-    //     $path = $request->image->storeAs('categories', $imageName, 'public');
-    $data['image']=Storage::putFile('categories',$request->image);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $data['image'] = $imagePath; // Store the path in the data array
+        }
 
         Category::create([
             "name" => $request->name,
@@ -74,13 +76,19 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $path = $category->image;
 
-        if ($request->hasFile("image")) {
+           $path = $category->image;
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
 
-            Storage::disk('public')->delete($category->image);
-
-
-            $imageName = time() . '_' . $request->image->getClientOriginalName();
-            $path = $request->image->storeAs('categories', $imageName, 'public');
+            // Upload the new image
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $data['image'] = $imagePath;
+        } else {
+            // Keep the old image if no new one uploaded
+            $data['image'] = $category->image;
         }
 
         $category->update([

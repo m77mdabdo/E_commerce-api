@@ -20,6 +20,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::with('category')->findOrFail($id);
+        //  dd($product);
         return view('admin.product.showProduct', compact('product'));
     }
 
@@ -41,22 +42,15 @@ class ProductController extends Controller
             "category_id" => "required|numeric|exists:categories,id",
         ]);
 
-        // $imagePath = null;
-        // if ($request->hasFile('image')) {
-        //     $imageName = time() . '_' . $request->image->getClientOriginalName();
-        //     $imagePath = $request->image->storeAs('products', $imageName, 'public');
-        // }
-        $data['image'] = Storage::putFile("products", $request->image);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath; // Store the path in the data array
+        }
+        // dd($data['image']);
 
         // dd($request->all());
-        Product::create([
-            "name" => $request->name,
-            "desc" => $request->desc,
-            "price" => $request->price,
-            "image" => $data['image'],
-            "quantity" => $request->quantity,
-            "category_id" => $request->category_id,
-        ]);
+        Product::create($data);
 
         session()->flash("success", "create proute ");
         return redirect(route('allProducts'));
@@ -84,27 +78,24 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $path = $product->image;
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
 
-        if ($request->hasFile("image")) {
-
-            Storage::disk('public')->delete($product->image);
-
-
-            $imageName = time() . '_' . $request->image->getClientOriginalName();
-            $path = $request->image->storeAs('products',$imageName, 'public');
+            // Upload the new image
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        } else {
+            // Keep the old image if no new one uploaded
+            $data['image'] = $product->image;
         }
 
 
 
 
-        $product->update([
-            "name" => $request->name,
-            "desc" => $request->desc,
-            "price" => $request->price,
-            "image" => $path,
-            "quantity" => $request->quantity,
-            "category_id" => $request->category_id,
-        ]);
+        $product->update($data);
 
         session()->flash("success", "Data updated successfully");
 
@@ -122,7 +113,5 @@ class ProductController extends Controller
         session()->flash("success", "data delete  successfuly");
 
         return  redirect(route("allProducts"));
-
-
     }
 }

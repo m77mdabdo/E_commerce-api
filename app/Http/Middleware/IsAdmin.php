@@ -25,7 +25,8 @@ class IsAdmin
                 ], 403); // Forbidden
             }
 
-            return redirect(url("redirect"));
+
+            return redirect(route('home')); // Redirect to home or any other page
         }
     }
 }

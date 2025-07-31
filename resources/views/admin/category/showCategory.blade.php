@@ -13,7 +13,12 @@
 <p><strong>Description:</strong> {{$category->desc }}</p>
 
 <p><strong>Image:</strong><br>
-    <img src="{{ asset('storage/' .$category->image) }}" alt="">
+           @if ($category->image)
+          
+                        <img src="{{ asset('storage/' . $category->image) }}" alt="User Image" class="img-thumbnail mb-3" style="width: 120px; height: 120px;">
+                    @else
+                        <p class="text-muted">No image available.</p>
+                    @endif
 
 </p>
 

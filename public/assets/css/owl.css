@@ -184,3 +184,20 @@
   z-index: 1;
   height: 100%;
   width: 100%; }
+
+
+  .filled-button {
+  background-color: #f33f3f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: 0.3s ease-in-out;
+}
+
+.filled-button:hover {
+  background-color: #d72d2d;
+  color: #fff;
+}

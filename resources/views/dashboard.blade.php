@@ -6,7 +6,7 @@
     </x-slot>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <a href="{{ url("redirect") }}">home</a>
+            <a href="{{ url("/redirect") }}">home</a>
         </h2>
     </x-slot>
 

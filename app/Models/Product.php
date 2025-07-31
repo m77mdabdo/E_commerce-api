@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -24,4 +25,18 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetails::class, 'product_id');
+    }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'product_id');
+    }
+
+    public function isFavorite(){
+        return $this->favorites()->where('user_id', Auth::id())->exists();
+
+    }
+
 }
