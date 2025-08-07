@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     //
+
+    
      public function makeOrder(Request $request)
     {
 
@@ -32,13 +34,13 @@ class OrderController extends Controller
                 "quantity" => $product['quantity'],
             ]);
 
-            // تقليل الكمية من المخزون
+
             $productDB = Product::find($id);
             if ($productDB->quantity >= $product['quantity']) {
                 $productDB->quantity -= $product['quantity'];
                 $productDB->save();
             } else {
-                // لو الكمية غير كافية، تقدر تتصرف مثلاً:
+
                 return redirect()->back()->with('error', 'Quantity not available in stock.');
             }
         }

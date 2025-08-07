@@ -19,9 +19,28 @@ class ProductController extends Controller
     public function all()
     {
         $products = Product::paginate(2);
+
         // dd($products);
         return view('user.app.latestProducts', ["products" => $products]);
     }
+
+    public function ourProducts()
+    {
+        $products = Product::paginate(2);
+        $categories = Category::all();
+        // dd($products);
+        return view('user.product.ourProducts', ["products" => $products, "categories" => $categories]);
+    }
+
+    public function byCategory($id)
+    {
+        $products = Product::where('category_id', $id)->paginate(2);
+        $categories = Category::all();
+        // dd($products);
+        return view('user.product.ourProducts', ["products" => $products, "categories" => $categories]);
+    }
+
+
 
 
     public function show($id)

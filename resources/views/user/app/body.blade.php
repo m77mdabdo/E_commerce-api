@@ -44,7 +44,7 @@
             <li><a href="#">Colorful scarves and hats</a></li>
             <li><a href="#">Unique gifts for special occasions</a></li>
           </ul>
-          <a href="{{ route('allProductsUser') }}" class="filled-button">View Products</a>
+          <a href="{{ route('ourProductsUser') }}" class="filled-button">View Products</a>
         </div>
       </div>
       <div class="col-md-6">
@@ -67,7 +67,7 @@
               <p>Shop our exclusive range of girls accessories that blend fashion, elegance, and creativity — perfect for every occasion.</p>
             </div>
             <div class="col-md-4">
-              <a href="{{ route('allProductsUser') }}" class="filled-button">Shop Now</a>
+              <a href="{{ route('ourProductsUser') }}" class="filled-button">Shop Now</a>
             </div>
           </div>
         </div>

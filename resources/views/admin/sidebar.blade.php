@@ -38,13 +38,57 @@
             </a>
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('allCategory') }}"> @lang('massages.categories')</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('allProducts') }}">@lang('massages.products')</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('allCategory') }}"> @lang('massages.categories')</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('allProducts') }}">@lang('massages.products')</a>
+                    </li>
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('/dashboard') }}"> Logout</a></li> --}}
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> </a></li>
                 </ul>
             </div>
         </li>
+
+        {{-- catrgory --}}
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('allCategory') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-view-list"></i>
+                </span>
+                <span class="menu-title">@lang('massages.categories')</span>
+            </a>
+        </li>
+
+
+        {{-- products --}}
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('allProducts') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-cube-outline"></i>
+                </span>
+                <span class="menu-title">@lang('massages.products')</span>
+            </a>
+        </li>
+
+        {{-- aboutUs --}}
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('showAboutUs') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-account-card-details"></i>
+                </span>
+                <span class="menu-title">About Us</span>
+            </a>
+        </li>
+
+        {{-- orders --}}
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('allOrders') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-cart-outline"></i>
+                </span>
+                <span class="menu-title">Orders</span>
+            </a>
+        </li>
+
 
         <li class="nav-item menu-items">
             <a class="nav-link" data-bs-toggle="collapse" href="#language" aria-expanded="false"
@@ -52,16 +96,16 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-translate"></i>
                 </span>
-                <span class="menu-title">{{__('massages.language')}}</span>
+                <span class="menu-title">{{ __('massages.language') }}</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="language">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('change/en')}}">@lang('massages.english')  </a>
+                        <a class="nav-link" href="{{ url('change/en') }}">@lang('massages.english') </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('change/ar')}}"> @lang('massages.arabic') </a>
+                        <a class="nav-link" href="{{ url('change/ar') }}"> @lang('massages.arabic') </a>
                     </li>
                 </ul>
             </div>

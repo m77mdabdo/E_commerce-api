@@ -19,16 +19,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="products.html">Our Products</a>
+                        <a class="nav-link" href="{{route('ourProductsUser')}}">Our Products</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About Us</a>
+                        <a class="nav-link" href="{{route('aboutUs')}}">About Us</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
+
 
 
 

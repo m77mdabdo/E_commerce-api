@@ -20,6 +20,15 @@
                             <input type="number" name="quantity" value="1" min="1" class="form-control mb-2">
                             <button type="submit" class="btn filled-button section-heading">Add to Cart</button>
                         </form>
+                        <form action="{{ route('addWishListUser', $product->id) }}" method="POST">
+                                     @csrf
+
+                                     <input type="hidden" name="total_price" id="total_price">
+
+
+                                     <button type="submit" class="btn filled-button section-heading">Add to
+                                         WishListUser</button>
+                                 </form>
                         <span>Reviews (24)</span>
                     </div>
                 </div>

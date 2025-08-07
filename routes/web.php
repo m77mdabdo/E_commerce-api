@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\HomeController ;
 use App\Http\Controllers\User\HomeController as UserHomeController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -113,6 +115,8 @@ Route::get("change/{lang}",function($lang){
 // products users
 Route::prefix('user')->controller(UserProductController::class)->group(function () {
     Route::get('products', 'all')->name('allProductsUser');
+    Route::get('ourProducts','ourProducts')->name('ourProductsUser');
+    Route::get('/products/category/{id}', 'byCategory')->name('products.byCategory');
     Route::get('products/show/{id}', 'show')->name('showProductUser');
 
     //add to wishlist
@@ -157,16 +161,23 @@ Route::controller(OrderController::class)->group(function () {
 });
 
 
-
-// category users
-
-Route::prefix('user')->controller(UserCategoryController::class)->group(function () {
-    Route::get('categories', 'all')->name('allCategoryUser');
-    Route::get('categories/show/{id}', 'show')->name('showCategoryUser');
-    Route::get('categories/create', 'create')->name('createCategoryUser');
-    Route::post('categories', 'store')->name('storeCategoryUser');
-    Route::delete("categories/delete/{id}", "delete")->name("deleteCategoryUser");
+//about us
+Route::controller(AboutUsController::class)->group(function () {
+    Route::get('aboutUs', 'index')->name('aboutUs');
+    Route::get('aboutUs/show', 'show')->name('showAboutUs');
+    Route::get('aboutUs/edit/{id}', 'edit')->name('editAboutUs');
+    Route::put('aboutUs/update/{id}', 'update')->name('updateAboutUs');
+    Route::delete('aboutUs/delete/{id}', 'delete')->name('deleteAboutUs');
 });
+
+
+
+
+
+
+
+
+
 
 
 
