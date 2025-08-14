@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AboutUs;
 
 use App\Models\AboutUs;
-use BaconQrCode\Renderer\Color\Cmyk;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use BaconQrCode\Renderer\Color\Cmyk;
 use Illuminate\Support\Facades\Storage;
 
 class AboutUsController extends Controller

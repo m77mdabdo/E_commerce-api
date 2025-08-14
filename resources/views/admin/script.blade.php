@@ -18,3 +18,13 @@
 <!-- Custom js for this page -->
 <script src="{{asset("admin/assets")}}/js/dashboard.js"></script>
 <!-- End custom js for this page -->
+
+<script>
+    function openFullImage(src) {
+        document.getElementById('fullImage').src = src;
+        document.getElementById('imageModal').style.display = 'flex';
+    }
+    function closeFullImage() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+</script>

@@ -38,10 +38,9 @@
             </a>
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('allCategory') }}"> @lang('massages.categories')</a>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('allUsers') }}"> @lang('Users')</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('allProducts') }}">@lang('massages.products')</a>
-                    </li>
+
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('/dashboard') }}"> Logout</a></li> --}}
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> </a></li>
                 </ul>
@@ -88,6 +87,16 @@
                 <span class="menu-title">Orders</span>
             </a>
         </li>
+
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('allReviewsAdmin') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-star-outline"></i>
+                </span>
+                <span class="menu-title">Reviews</span>
+            </a>
+        </li>
+
 
 
         <li class="nav-item menu-items">

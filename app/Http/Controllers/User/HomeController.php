@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,15 @@ class HomeController extends Controller
             return view('user.home', compact('products'));
 
     }
+
+    public function show($id){
+        $user = User::findOrFail($id);
+        return view('admin.nav', compact('user'));
+
+    }
+
+
+
 
 
 

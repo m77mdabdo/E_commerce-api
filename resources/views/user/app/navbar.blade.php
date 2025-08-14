@@ -19,11 +19,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('ourProductsUser')}}">Our Products</a>
+                        <a class="nav-link" href="{{ route('ourProductsUser') }}">Our Products</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('aboutUs')}}">About Us</a>
+                        <a class="nav-link" href="{{ route('aboutUs') }}">About Us</a>
                     </li>
 
 
@@ -61,20 +61,28 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('userWishList') }}" data-bs-toggle="tooltip"
-
                             data-bs-placement="bottom" title="My WishList">
 
                             <i class="fa fa-bookmark"></i>
                         </a>
                     </li>
 
-                     {{-- Cart --}}
+                    {{-- Cart --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('userCart') }}" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="My Cart">
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                     </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('userFav') }}" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom" title="My Favorites">
+                            <i class="fa fa-heart"></i>
+                        </a>
+                    </li>
+
 
 
 

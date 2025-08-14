@@ -1,18 +1,23 @@
 <?php
 
-use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Review\ReviewController;
 use App\Models\User;
-use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Rules\Role;
+use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Group;
+use App\Http\Controllers\HomeController ;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Orders\OrderController;
+use App\Http\Controllers\Favoretes\FavController;
+use App\Http\Controllers\AboutUs\AboutUsController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\User\HomeController as UserHomeController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
-use App\Http\Controllers\HomeController ;
-use App\Http\Controllers\User\HomeController as UserHomeController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 
 
 // Route::get('/', function () {
@@ -33,6 +38,7 @@ use App\Http\Controllers\User\HomeController as UserHomeController;
 //home user
 
 Route::get('/', [UserHomeController::class, 'home'])->name('userHome');
+Route::get('user/home/{$id}', [UserHomeController::class, 'show'])->name('userHomeShow');
 
 
 Route::controller(AuthController::class)->group(function () {
@@ -128,7 +134,8 @@ Route::prefix('user')->controller(UserProductController::class)->group(function 
 
     //add to cart
     Route::middleware('auth')->group(function () {
-        Route::post('addToFav/{id}', 'addToFav')->name('addToFav');
+
+
         Route::post('products/addToCart/{id}', 'addToCart')->name('addToCartUser');
 
         Route::post('products/addToCart/{id}', 'addToCart')->name('addToCartUser');
@@ -139,14 +146,22 @@ Route::prefix('user')->controller(UserProductController::class)->group(function 
 
      });
 
-    // Route::get('/order-details/{id}','orderDetails')->name('userOrderDetails');
+
 
 
 });
 
 
+Route::controller(FavController::class)->middleware(['auth'])->group(function () {
+      Route::get('myFav', 'myFav')->name('userFav');
+        Route::post('addToFav/{id}', 'addToFav')->name('addToFav');
+    Route::delete('favorites/remove/{id}', 'removeFromFavorites')->name('removeFromFavorites');
+});
+
+
 //make order
-Route::controller(OrderController::class)->group(function () {
+Route::controller(OrderController::class)->middleware(['auth'])->group(function () {
+
     Route::get('orders', 'index')->name('allOrders');
     //show
     Route::get('orders/show/{id}', 'show')->name('showOrder');
@@ -168,7 +183,45 @@ Route::controller(AboutUsController::class)->group(function () {
     Route::get('aboutUs/edit/{id}', 'edit')->name('editAboutUs');
     Route::put('aboutUs/update/{id}', 'update')->name('updateAboutUs');
     Route::delete('aboutUs/delete/{id}', 'delete')->name('deleteAboutUs');
+
 });
+
+
+Route::controller(UserController::class)->middleware(['auth'])->group(function () {
+
+    Route::get('users', 'all')->name('allUsers');
+    Route::get('users/show/{id}', 'show')->name('showUser');
+    Route::get('create', 'create')->name('createUser');
+    Route::post('users', 'store')->name('storeUser');
+    Route::get('users/edit/{id}', 'edit')->name('editUser');
+    Route::put('users/update/{id}', 'update')->name('updateUser');
+    Route::delete('users/delete/{id}', 'delete')->name('deleteUser');
+});
+
+//review user
+Route::prefix('user')->controller(ReviewController::class)->middleware(['auth'])->group(function () {
+    Route::get('reviews', 'index')->name('allReviews');
+    Route::get('reviews/show/{id}', 'show')->name('showReview');
+    Route::get('reviews/create/{id}', 'create')->name('createReview');
+    Route::post('reviews', 'store')->name('storeReview');
+    
+});
+
+
+//review admin
+Route::controller(AdminReviewController::class)->middleware(['auth','IsAdmin'])->group(function () {
+    Route::get('reviews', 'index')->name('allReviewsAdmin');
+    Route::get('reviews/show/{id}', 'show')->name('showReviewAdmin');
+    Route::get('reviews/create', 'create')->name('createReviewAdmin');
+    Route::post('reviews', 'store')->name('storeReviewAdmin');
+    Route::get('reviews/edit/{id}', 'edit')->name('editReviewAdmin');
+    Route::put('reviews/update/{id}', 'update')->name('updateReviewAdmin');
+    Route::delete('reviews/delete/{id}', 'destroy')->name('deleteReviewAdmin');
+});
+
+
+
+
 
 
 

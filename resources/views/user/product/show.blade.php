@@ -21,18 +21,89 @@
                             <button type="submit" class="btn filled-button section-heading">Add to Cart</button>
                         </form>
                         <form action="{{ route('addWishListUser', $product->id) }}" method="POST">
-                                     @csrf
+                            @csrf
 
-                                     <input type="hidden" name="total_price" id="total_price">
+                            <input type="hidden" name="total_price" id="total_price">
 
 
-                                     <button type="submit" class="btn filled-button section-heading">Add to
-                                         WishListUser</button>
-                                 </form>
-                        <span>Reviews (24)</span>
+                            <button type="submit" class="btn filled-button section-heading">Add to
+                                WishListUser</button>
+                        </form>
+                        <span>
+                            Reviews
+                            <a href="{{ route('allReviews') }}" style="color:#ff0000; text-decoration:none;">
+                                ({{ $product->reviews->count() }})
+                            </a>
+                        </span>
+
+
+                        {{-- عرض آخر الريفيوهات --}}
+                        @if ($product->reviews->count())
+                            <div class="mt-2">
+                                @foreach ($product->reviews as $review)
+                                    <p style="margin-bottom: 5px;">
+                                        <strong>{{ $review->user->name }}:</strong>
+                                        <span class="text-warning">
+                                            @for ($i = 1; $i <= $review->rating; $i++)
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+                                        </span>
+                                        <br>
+                                        {{ $review->comment }}
+                                    </p>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @auth
+                            {{-- عرض النجوم --}}
+                            <div class="rating mb-2">
+                                @for ($i = 5; $i >= 1; $i--)
+                                    <input type="radio" id="star{{ $i }}-{{ $product->id }}" name="rating"
+                                        value="{{ $i }}">
+                                    <label for="star{{ $i }}-{{ $product->id }}"
+                                        title="{{ $i }} stars">
+                                        <i class="fa fa-star"></i>
+                                    </label>
+                                @endfor
+                            </div>
+                            <br>
+
+                            {{-- زرار الكومنت --}}
+                            <a href="{{ route('createReview', $product->id) }}" class="btn filled-button"
+                                style="background-color:#ff0000; border:none;">
+                                Add Comment
+                            </a>
+                        @endauth
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+<style>
+    .rating {
+        direction: rtl;
+        display: inline-flex;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        font-size: 1.5rem;
+        color: #ccc;
+        cursor: pointer;
+    }
+
+    .rating input:checked~label i {
+        color: gold;
+    }
+
+    .rating label:hover i,
+    .rating label:hover~label i {
+        color: gold;
+    }
+</style>

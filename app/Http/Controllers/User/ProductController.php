@@ -168,31 +168,8 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product removed from wishlist!');
     }
 
-    public function addToFav($id){
-
-        $product = Product::findOrFail($id);
-        $user = Auth::id();
-        // Logic to add product to user's favorites
-
-        //class fav (userr, product );
-
-        $isFav = Favorite::where('user_id', $user)->where('product_id', $id)->first();
-
-        // dd($isFav);
-        if ($isFav) {
-            // If already favorited, remove it
-            $isFav->delete();
-            return redirect()->back()->with('success', 'Product removed from favorites!');
-        } else {
-            // If not favorited, add it
-            Favorite::create([
-                'user_id' => $user,
-                'product_id' => $id,
-            ]);
-            return redirect()->back()->with('success', 'Product added to favorites!');
-        }
 
 
-    }
+    
 
 }
