@@ -76,28 +76,36 @@
             <form method="POST" action="{{ route('storeLogin') }}">
                 @csrf
 
+                <!-- Email Input -->
                 <div class="mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email Address" required autofocus>
-
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                        placeholder="Email Address" value="{{ old('email') }}" required autofocus>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
+                <!-- Password Input -->
                 <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                        placeholder="Password" required>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
-
-
+                <!-- Submit Button -->
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
-
             </form>
+
+            <!-- Register Link -->
             <div class="text-center mt-3">
-                    Already have an account? <a href="{{ route('register') }}">Register Here</a>
-                </div>
+                Don’t have an account? <a href="{{ route('register') }}">Register Here</a>
+            </div>
         </div>
     </div>
 
 </body>
-
 </html>

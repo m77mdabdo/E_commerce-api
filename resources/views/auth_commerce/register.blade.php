@@ -18,8 +18,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-           background: url("{{ asset('healthcoach-master/images/image_3.jpg') }}") no-repeat center center fixed;
-
+            background: url("{{ asset('healthcoach-master/images/image_3.jpg') }}") no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
         }
@@ -70,32 +69,42 @@
             </div>
             <h3 class="text-center mb-4">Create Your Account</h3>
 
+            {{-- عرض الأخطاء --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('storeRegister') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">
-                    <input type="text" name="name" class="form-control" placeholder="Full Name" required>
-                </div>
-
-
-
-                <div class="mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                        placeholder="Full Name" required>
                 </div>
 
                 <div class="mb-3">
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control"
+                        placeholder="Email Address" required>
+                </div>
 
-                     <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required >
-
-                  </div>
-
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}"
+                        placeholder="Phone" required>
+                </div>
 
                 <div class="mb-3">
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
 
                 <div class="mb-3">
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                    <input type="password" name="password_confirmation" class="form-control"
+                        placeholder="Confirm Password" required>
                 </div>
 
                 <div class="d-grid">
@@ -112,3 +121,5 @@
 </body>
 
 </html>
+
+

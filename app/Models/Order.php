@@ -11,6 +11,10 @@ class Order extends Model
         'orderDate',
         'requireDate',
         'user_id',
+        'full_name',
+        'phone',
+        'address',
+        'note',
     ];
     // You can define relationships here if needed, e.g., user, products, etc.
     public function userData()
@@ -33,5 +37,17 @@ public function product(){
     return $this->belongsTo(Product::class);
 }
 
+   public function getGrandTotalAttribute()
+{
+    return $this->orderDetails->sum(function($detail) {
+        return $detail->price * $detail->quantity;
+    });
+}
 
+public function payments()
+{
+    return $this->hasMany(Payment::class);
+
+
+}
 }

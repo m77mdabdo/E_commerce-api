@@ -18,21 +18,31 @@ class OrderController extends Controller
         $orders = Order::with('user', 'orderDetails.product')
             ->paginate(3);
 
-        return view('admin.orders.allOrders', compact('orders'));
+        return view('orders.allOrders', compact('orders'));
     }
 
     public function show($id)
-    {
-        $order = Order::with('user', 'orderDetails.product')->where('user_id', Auth::id())->findOrFail($id);
-        return view('admin.orders.showOrders', compact('order'));
+{
+    if (auth()->user()->role === 'admin') {
+
+        $order = Order::with('user', 'orderDetails.product')->findOrFail($id);
+    } else {
+
+        $order = Order::with('user', 'orderDetails.product')
+                      ->where('user_id', auth()->id())
+                      ->findOrFail($id);
     }
+
+    return view('orders.showOrders', compact('order'));
+}
+
 
     public function edit($id)
     {
         $order = Order::with('user', 'orderDetails.product')->where('user_id', Auth::id())->findOrFail($id);
 
         $products = Product::all();
-        return view('admin.orders.editOrders', compact('order', 'products'));
+        return view('orders.editOrders', compact('order', 'products'));
     }
 
     public function update(Request $request, $id)
@@ -91,15 +101,31 @@ class OrderController extends Controller
 
     public function makeOrder(Request $request)
     {
+        $request->validate([
+            'requireDate' => 'required|date',
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
 
-        $cart = session()->get('cart');
+        $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Your cart is empty.');
+        }
 
         $user_id = Auth::user()->id;
 
         $order = Order::create([
             "requireDate" => $request->requireDate,
             "user_id" => $user_id,
-
+            "full_name" => $request->full_name,
+            "phone" => $request->phone,
+            "address" => $request->address,
+            "notes" => $request->notes,
+            "status" => "pending",
+            "total_price" => array_sum(array_column($cart, 'total_price')),
         ]);
 
         foreach ($cart as $id => $product) {
@@ -109,27 +135,51 @@ class OrderController extends Controller
                 "price" => $product['total_price'],
                 "quantity" => $product['quantity'],
             ]);
-
-
             $productDB = Product::find($id);
             if ($productDB->quantity >= $product['quantity']) {
                 $productDB->quantity -= $product['quantity'];
                 $productDB->save();
             } else {
-
                 return redirect()->back()->with('error', 'Quantity not available in stock.');
             }
         }
 
         session()->forget('cart');
 
-        return redirect()->route('userCart')->with('success', 'Order placed successfully!');
-        // Clear the cart after placing the order
-
-
-
+        return redirect()->route('createPayment', $order->id);
     }
 
+
+// public function makeOrder(Request $request)
+// {
+//     $request->validate([
+//         'requireDate' => 'required|date',
+//         'full_name' => 'required|string|max:255',
+//         'phone' => 'required|string|max:20',
+//         'address' => 'required|string|max:255',
+//         'notes' => 'nullable|string',
+//     ]);
+
+//     $cart = session()->get('cart', []);
+
+//     if (empty($cart)) {
+//         return redirect()->back()->with('error', 'Your cart is empty.');
+//     }
+
+//     // نخزن بيانات الأوردر مؤقتًا في السيشن
+//     session()->put('checkout_data', [
+//         'requireDate' => $request->requireDate,
+//         'full_name' => $request->full_name,
+//         'phone' => $request->phone,
+//         'address' => $request->address,
+//         'notes' => $request->notes,
+//         'cart' => $cart,
+//         "user_id" =>  Auth::user()->id,
+//     ]);
+
+//     // نروح لصفحة الدفع
+//     return redirect()->route('stripe.checkout');
+// }
 
     public function delete($id)
     {

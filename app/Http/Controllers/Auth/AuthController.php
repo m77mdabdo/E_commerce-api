@@ -10,65 +10,77 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    //
-     public function createRegister()
+    /**
+     * Show Register Page
+     */
+    public function createRegister()
     {
         return view('auth_commerce.register');
     }
 
+    /**
+     * Handle Register
+     */
     public function storeRegister(Request $request)
     {
         $validator = Validator::make($request->all(), [
-        "name" => "required|string|max:255",
-        "email" => "required|email|max:255|unique:users,email",
-        "phone" => "required",
-        "password" => "required|string|min:6|confirmed",
-    ]);
+            "name"     => "required|string|max:255",
+            "email"    => "required|email|max:255|unique:users,email",
+            "phone"    => "required",
+            "password" => "required|string|min:6|confirmed",
+        ]);
 
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $data= $validator->validated();
+        $data = $validator->validated();
         $data['password'] = bcrypt($request->password);
 
+        $user = User::create($data);
 
+        // تسجيل الدخول مباشرة بعد التسجيل
+        Auth::login($user);
 
-        User::create($data);
-        return view('auth_commerce.login');
-
+        return redirect()->route('home')->with('success', "Welcome {$user->name}");
     }
+
+    /**
+     * Show Login Page
+     */
     public function createLogin()
     {
         return view('auth_commerce.login');
     }
 
+    /**
+     * Handle Login
+     */
     public function storeLogin(Request $request)
     {
-
-        $data = $request->validate([
-            "email" => "required|email|max:255",
+        $credentials = $request->validate([
+            "email"    => "required|email|max:255",
             "password" => "required|string|min:6",
         ]);
 
-        $valid =   Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-
-
-        if ($valid) {
-            $user =  User::select("name")->where("email", $request->email)->first();
-
-            session()->flash("sucess", "welcome $user->name");
-
-              return redirect()->route('home');
-
-        } else {
-            return redirect(route("register"));
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            return redirect()->route('home')->with("success", "Welcome {$user->name}");
         }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials, please try again.',
+        ])->withInput();
     }
 
+    /**
+     * Logout
+     */
     public function logout()
     {
         Auth::logout();
-        return redirect(route('userHome'));
+        return redirect()->route('userHome')->with("success", "You have been logged out.");
     }
 }

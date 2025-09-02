@@ -55,6 +55,7 @@
                     <i class="mdi mdi-view-grid"></i>
                 </a>
             </li>
+            
             <li class="nav-item dropdown border-left">
                 <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#"
                     data-bs-toggle="dropdown" aria-expanded="false">

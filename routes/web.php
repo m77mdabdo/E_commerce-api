@@ -1,23 +1,26 @@
 <?php
 
-use App\Http\Controllers\Review\ReviewController;
+
+
 use App\Models\User;
 use Laravel\Jetstream\Rules\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Group;
-use App\Http\Controllers\HomeController ;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Orders\OrderController;
-use App\Http\Controllers\Favoretes\FavController;
-use App\Http\Controllers\AboutUs\AboutUsController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Favoretes\FavController;
+use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AboutUs\AboutUsController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\User\HomeController as UserHomeController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
-use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 
 
 // Route::get('/', function () {
@@ -82,7 +85,7 @@ Route::controller(CategoryController::class)->middleware(['auth', 'IsAdmin'])
 
 
 //products Admin
-Route::controller(ProductController::class)->middleware([ 'auth','IsAdmin'])->group(function () {
+Route::controller(ProductController::class)->middleware(['auth', 'IsAdmin'])->group(function () {
     Route::get('products', 'all')->name('allProducts');
     Route::get('products/show/{id}', 'show')->name('showProduct');
 
@@ -99,14 +102,14 @@ Route::controller(ProductController::class)->middleware([ 'auth','IsAdmin'])->gr
 
 //language
 
-Route::get("change/{lang}",function($lang){
+Route::get("change/{lang}", function ($lang) {
 
 
-    if($lang == "en"){
+    if ($lang == "en") {
         session()->put("lang", "en");
-    }else if($lang == "ar"){
+    } else if ($lang == "ar") {
         session()->put("lang", "ar");
-    }else{
+    } else {
         session()->put("lang", "en");
     }
 
@@ -121,14 +124,14 @@ Route::get("change/{lang}",function($lang){
 // products users
 Route::prefix('user')->controller(UserProductController::class)->group(function () {
     Route::get('products', 'all')->name('allProductsUser');
-    Route::get('ourProducts','ourProducts')->name('ourProductsUser');
+    Route::get('ourProducts', 'ourProducts')->name('ourProductsUser');
     Route::get('/products/category/{id}', 'byCategory')->name('products.byCategory');
     Route::get('products/show/{id}', 'show')->name('showProductUser');
 
     //add to wishlist
     Route::post('products/addWishList/{id}', 'addWishList')->name('addWishListUser');
     Route::get('wishList', 'wishList')->name('userWishList');
-     Route::get('/wishList/remove/{id}','removeFromWishList')->name('removeFromWishListUser');
+    Route::get('/wishList/remove/{id}', 'removeFromWishList')->name('removeFromWishListUser');
 
 
 
@@ -141,20 +144,14 @@ Route::prefix('user')->controller(UserProductController::class)->group(function 
         Route::post('products/addToCart/{id}', 'addToCart')->name('addToCartUser');
 
         Route::get('myCart', 'myCart')->name('userCart');
-        Route::get('/cart/remove/{id}','removeFromCart')->name('removeFromCartUser');
-
-
-     });
-
-
-
-
+        Route::get('/cart/remove/{id}', 'removeFromCart')->name('removeFromCartUser');
+    });
 });
 
 
 Route::controller(FavController::class)->middleware(['auth'])->group(function () {
-      Route::get('myFav', 'myFav')->name('userFav');
-        Route::post('addToFav/{id}', 'addToFav')->name('addToFav');
+    Route::get('myFav', 'myFav')->name('userFav');
+    Route::post('addToFav/{id}', 'addToFav')->name('addToFav');
     Route::delete('favorites/remove/{id}', 'removeFromFavorites')->name('removeFromFavorites');
 });
 
@@ -172,7 +169,7 @@ Route::controller(OrderController::class)->middleware(['auth'])->group(function 
     Route::delete('orders/delete/{id}', 'delete')->name('deleteOrder');
 
     //make order
-    Route::post('makeOrder','makeOrder')->name('userMakeOrder')->middleware('auth');
+    Route::post('makeOrder', 'makeOrder')->name('userMakeOrder')->middleware('auth');
 });
 
 
@@ -183,7 +180,6 @@ Route::controller(AboutUsController::class)->group(function () {
     Route::get('aboutUs/edit/{id}', 'edit')->name('editAboutUs');
     Route::put('aboutUs/update/{id}', 'update')->name('updateAboutUs');
     Route::delete('aboutUs/delete/{id}', 'delete')->name('deleteAboutUs');
-
 });
 
 
@@ -204,12 +200,11 @@ Route::prefix('user')->controller(ReviewController::class)->middleware(['auth'])
     Route::get('reviews/show/{id}', 'show')->name('showReview');
     Route::get('reviews/create/{id}', 'create')->name('createReview');
     Route::post('reviews', 'store')->name('storeReview');
-    
 });
 
 
 //review admin
-Route::controller(AdminReviewController::class)->middleware(['auth','IsAdmin'])->group(function () {
+Route::controller(AdminReviewController::class)->middleware(['auth', 'IsAdmin'])->group(function () {
     Route::get('reviews', 'index')->name('allReviewsAdmin');
     Route::get('reviews/show/{id}', 'show')->name('showReviewAdmin');
     Route::get('reviews/create', 'create')->name('createReviewAdmin');
@@ -219,21 +214,11 @@ Route::controller(AdminReviewController::class)->middleware(['auth','IsAdmin'])-
     Route::delete('reviews/delete/{id}', 'destroy')->name('deleteReviewAdmin');
 });
 
+//payment
 
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('order/{order}/payment', 'create')->name('createPayment');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Route::post('order/{order}/payment-intent', 'createStripePaymentIntent')->name('stripe.paymentIntent.create');
+    Route::get('order/{order}/payment/confirm', 'confirm')->name('stripe.return');
+});
